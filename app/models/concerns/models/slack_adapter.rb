@@ -25,12 +25,13 @@ module Concerns::Models
       end
 
       # Define API singleton method.
-      # @param [Symbol] name      API name.
-      # @param [String] method    Method name.
-      # @param [String] reference Reference.
-      def api_singleton_method(name, method, reference)
+      # @param [Symbol]  name       API name.
+      # @param [String]  method     Method name.
+      # @param [String]  reference  Reference.
+      # @param [Boolean] collection set api response is collection.
+      def api_singleton_method(name, method, reference, collection: nil)
         reference  = reference.to_s
-        collection = (reference.pluralize == reference.pluralize)
+        collection = (collection.nil? ? (reference.pluralize == reference.pluralize) : collection)
 
         define_singleton_method name do |params={}|
           result = request!(method, params)
