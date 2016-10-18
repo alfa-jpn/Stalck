@@ -6,6 +6,7 @@ module MessageSearchers
     column :user
     column :username
     column :text
+    column :attachments
     column :ts
     column :team
     column :channel
@@ -15,6 +16,5 @@ module MessageSearchers
     column :next_2
     column :previous
     column :previous_2
-    column :attributes
   end
 end

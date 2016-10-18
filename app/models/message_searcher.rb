@@ -13,5 +13,5 @@ class MessageSearcher
     @messages ||= matches.map { |m| MessageSearchers::Message.new(m) }
   end
 
-  api_singleton_method :search, 'search.all', :messages, collection: false
+  api_singleton_method :search, 'search.messages', :messages, collection: false
 end
