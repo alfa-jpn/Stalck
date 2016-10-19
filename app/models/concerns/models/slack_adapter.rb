@@ -2,8 +2,9 @@ module Concerns::Models
   module SlackAdapter
     extend ActiveSupport::Concern
 
-    API_URL = ENV['SLACK_API_URL']
-    TOKEN   = ENV['SLACK_TOKEN']
+    API_URL       = ENV['SLACK_API_URL']
+    TOKEN         = ENV['SLACK_TOKEN']
+    CACHE_EXPIRES = 1.minutes
 
     # Initialize instance.
     # @param [Hash] parameters parameters of model.
@@ -54,7 +55,9 @@ module Concerns::Models
       def request!(method, params)
         result = JSON.parse(Net::HTTP.get(create_uri(method, params)))
         if result['ok']
-          result
+          Rails.cache.fetch("#{method}::#{Digest::SHA256.hexdigest(params.to_json)}", expires_in: CACHE_EXPIRES) do
+            result
+          end
         else
           raise result['error']
         end
