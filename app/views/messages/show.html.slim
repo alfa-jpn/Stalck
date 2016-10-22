@@ -1,0 +1,16 @@
+.messages.show
+  .header
+    h1.show__title
+      = @target
+
+  .main#js-messages data-target=@target
+    ul.show__messages
+      li.messages__message v-for='message in messages'
+        .message__user-icon   v-bind:style='"background-image: url(" + message.user_icon + ")"'
+        .message__user-name   v-text='message.user_name'
+        .message__date        v-text='message.date'
+        .message__content     v-text='message.content'
+        .message__attachments v-text='message.attachments'
+
+coffee:
+  new Vue(new Stalcks.Vues.MessageLoader('#js-messages'))

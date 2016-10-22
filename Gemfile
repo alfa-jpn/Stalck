@@ -26,6 +26,11 @@ gem 'jbuilder', '~> 2.5'
 # Environment
 gem 'dotenv-rails'
 
+# i18n default packages.
+gem 'rails-i18n'
+
+gem 'inum'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

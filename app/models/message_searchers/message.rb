@@ -16,5 +16,11 @@ module MessageSearchers
     column :next_2
     column :previous
     column :previous_2
+
+    # ユーザを取得する。
+    # @return [User] ユーザ
+    def user
+      @user_cache ||= User.find_by_id(@user)
+    end
   end
 end

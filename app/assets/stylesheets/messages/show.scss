@@ -1,0 +1,13 @@
+.messages {
+  &.show {
+    .show__messages {
+      .messages__message {
+        .message__user-icon {
+          width:  48px;
+          height: 48px;
+          background-size: cover;
+        }
+      }
+    }
+  }
+}

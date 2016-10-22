@@ -3,7 +3,8 @@ html
   head
     title Stalck
     = csrf_meta_tags
-    = stylesheet_link_tag
-    = javascript_include_tag
+    = stylesheet_link_tag :application
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js'
+    = javascript_include_tag :application
   body
     = yield

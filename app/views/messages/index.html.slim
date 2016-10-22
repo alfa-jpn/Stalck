@@ -1,2 +1,8 @@
-h1 Messages#index
-p Find me in app/views/messages/index.html.slim
+.messages.index
+  form#js-pager.index__form v-on:submit='onSubmit'
+    input v-model='target'
+    button
+      | Watching you
+
+coffee:
+  new Vue(new Stalcks.Vues.Pager('#js-pager'))

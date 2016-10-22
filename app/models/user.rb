@@ -26,7 +26,7 @@ class User
     # ユーザ辞書
     # @return [Hash] ユーザ辞書
     def dictionary
-      Rails.cache.fetch('User.dictionary', expires_in: 1.minutes) do
+      Rails.cache.fetch('User.dictionary', expires_in: 5.minutes) do
         all.map { |user| [user.id, user] }.to_h
       end
     end
