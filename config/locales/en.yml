@@ -3,6 +3,7 @@ en:
 
   message_searchers:
     type:
+      all:     'All'
       user:    'User'
       message: 'Message'
 

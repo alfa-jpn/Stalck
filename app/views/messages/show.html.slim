@@ -1,17 +1,23 @@
-- title = @keyword
-- title = @keyword.split(' ').map { |word| "@#{word}" }.join(' ') if @type == MessageSearchers::Type::USER
-- content_for(:title) { "#{title} | #{t('title')}" }
+- case
+  - when @keyword.blank?
+    - title = @type.t
+  - when @type == MessageSearchers::Type::USER
+    - title = @keyword.split(' ').map { |word| "@#{word}" }.join(' ')
+  - else
+    - title = @keyword
 
+- content_for(:title) { "#{title} | #{t('title')}" }
+- messages_json = (render partial: 'messages/_partials/messages.json', locals: {messages: @messages})
 .messages.show
   header.show__header
     h1.show__title
       = title
 
   main.show__content
-    section.content__main#js-messages
+    section.content__main#js-messages  data-type=@type.downcase data-keyword=@keyword data-messages=messages_json
       ul.main__messages
-        li.messages__message v-for='message in messages'
-          .message__user-icon v-bind:style='message.user_icon ? "background-image: url(" + message.user_icon + ")" : null'
+        = content_tag :li, 'v-bind:id' => 'message.id', 'v-bind:class' => '"messages__message messages__message--" + message.type', 'v-for' => 'message in messages'
+          .message__user-icon v-bind:style='"background-image: url(" + message.user_icon + ")"'
           .message__content
             .content__header
               .header__user-name v-text='message.user_name'
@@ -22,7 +28,7 @@
               .attachments__attachment v-for='attachment in message.attachments' v-bind:style='"border-color:#" + attachment.color'
                 .attachment__title v-text='attachment.title'
                 .attachment__author v-if='!!attachment.author_name'
-                  .author__icon v-bind:style='attachment.author_icon ? "background-image: url(" + attachment.author_icon + ")" : null'
+                  .author__icon v-bind:style='"background-image: url(" + attachment.author_icon + ")"'
                   .author__name v-text='attachment.author_name'
                 .attachment__text v-html='attachment.text'
                 .attachment__fields

@@ -12,15 +12,23 @@ class MessagesController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        MessageSearcher.search(query: @type.create_query(@keyword), sort: :timestamp).tap do |result|
-          @messages = result.messages
-          if @messages.any? and @histories.none? { |h| h[:type] == @type.downcase and h[:keyword] == @keyword }
-            Rails.cache.write(HISTORY_CACHE_KEY, @histories.unshift({ type: @type.downcase, keyword: @keyword }).take(50))
-          end
+        MessageSearcher.search(query: 'after:yesterday', sort: :timestamp, count: 100).tap do |result|
+          render 'messages/_partials/_messages', locals: { messages: result.messages }
         end
       end
       format.html do
-        render
+        if @type.present? and @keyword.present?
+          MessageSearcher.search(query: @type.create_query(@keyword), sort: :timestamp).tap do |result|
+            @messages = result.messages
+            if @messages.any? and @histories.none? { |h| h[:type] == @type.downcase and h[:keyword] == @keyword }
+              Rails.cache.write(HISTORY_CACHE_KEY, @histories.unshift({ type: @type.downcase, keyword: @keyword }).take(50))
+            end
+          end
+        else
+          MessageSearcher.search(query: 'after:yesterday', sort: :timestamp, count: 20).tap do |result|
+            @messages = result.messages
+          end
+        end
       end
     end
   end
@@ -28,7 +36,7 @@ class MessagesController < ApplicationController
   private
   # Set `@keyword`
   def set_keyword
-    @keyword = params[:keyword].strip
+    @keyword = params[:keyword].try(:strip)
   end
 
   # Set `@histories`
@@ -37,6 +45,6 @@ class MessagesController < ApplicationController
   end
 
   def set_type
-    @type = MessageSearchers::Type.parse!(params[:type])
+    @type = MessageSearchers::Type.parse(params[:type])
   end
 end

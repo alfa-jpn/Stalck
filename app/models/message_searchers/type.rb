@@ -1,5 +1,6 @@
 module MessageSearchers
   class Type < Inum::Base
+    define :ALL
     define :USER
     define :MESSAGE
 

@@ -4,7 +4,7 @@ module Concerns::Models
 
     API_URL       = ENV['SLACK_API_URL']
     TOKEN         = ENV['SLACK_TOKEN']
-    CACHE_EXPIRES = 1.minutes
+    CACHE_EXPIRES = 5.seconds
 
     # Initialize instance.
     # @param [Hash] parameters parameters of model.

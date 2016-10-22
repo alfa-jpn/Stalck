@@ -3,6 +3,7 @@ ja:
 
   message_searchers:
     type:
+      all:     'リアルタイム'
       user:    'ユーザ'
       message: 'メッセージ'
 
