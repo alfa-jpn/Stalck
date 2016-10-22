@@ -6,7 +6,8 @@ module MessagesHelper
   def decode_message(message)
     if message.present?
       message = replace_links(message)
-      replace_lines(message)
+      message = replace_lines(message)
+      replace_emojis(message)
     else
       nil
     end
@@ -38,5 +39,22 @@ module MessagesHelper
     message.gsub(/\r?\n/) do
       '<br>'
     end
+  end
+
+  # Replace emoji.
+  # @param [String] message
+  # @return [String] replaced message
+  def replace_emojis(message)
+    message.gsub(/:([a-z0-9_-]+?):/) do
+      case
+        when emoji = CustomEmoji.find_by_name($1)
+          "<img src='#{emoji}'>"
+        when emoji = Emoji.find_by_alias($1)
+          "<img src='#{image_path("emoji/#{emoji.image_filename}")}'>"
+        else
+         ":#{$1}:"
+      end
+    end
+
   end
 end

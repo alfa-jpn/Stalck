@@ -30,7 +30,7 @@ module Concerns::Models
       # @param [String]  method     Method name.
       # @param [String]  reference  Reference.
       # @param [Boolean] collection set api response is collection.
-      def api_singleton_method(name, method, reference, collection: nil)
+      def api_singleton_method(name, method, reference = nil, collection: nil)
         reference  = reference.to_s
         collection = (collection.nil? ? (reference.pluralize == reference.pluralize) : collection)
 
@@ -40,7 +40,7 @@ module Concerns::Models
           if collection
             result[reference].map { |d| new(d) }
           else
-            new(result[reference])
+            new(reference.present? ? result[reference] : result)
           end
         end
       end
