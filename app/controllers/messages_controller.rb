@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :set_target, only: [:show]
+  before_action :set_keyword, only: [:show]
+  before_action :set_type,    only: [:show]
 
   def index
   end
@@ -7,7 +8,7 @@ class MessagesController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        MessageSearcher.search(query: @target, sort: :timestamp).tap do |result|
+        MessageSearcher.search(query: @type.create_query(@keyword), sort: :timestamp).tap do |result|
           @messages = result.messages
         end
       end
@@ -19,12 +20,12 @@ class MessagesController < ApplicationController
 
   private
 
-  # Set `@target`
-  def set_target
-    @target = params[:target]
+  # Set `@keyword`
+  def set_keyword
+    @keyword = params[:keyword]
   end
 
   def set_type
-    @type =
+    @type = MessageSearchers::Type.parse!(params[:type])
   end
 end

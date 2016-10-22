@@ -14,15 +14,15 @@ class Channel
   api_singleton_method :all, 'channels.list', :channels
 
   class << self
-    # IDからチャンネルを探す。
-    # @return [User, Nil] チャンネル
+    # Find channel by id。
+    # @return [User, Nil] channel
     def find_by_id(id)
       dictionary[id]
     end
 
     private
-    # ユーザ辞書
-    # @return [Hash] ユーザ辞書
+    # Channel dictionary.
+    # @return [Hash] dictionary.
     def dictionary
       Rails.cache.fetch('Channel.dictionary', expires_in: 5.minutes) do
         all.map { |user| [user.id, user] }.to_h

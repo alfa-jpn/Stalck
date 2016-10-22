@@ -1,2 +1,6 @@
 en:
   title: 'Stalck'
+  message_searchers:
+    type:
+      user:    'User'
+      message: 'Message'

@@ -1,2 +1,6 @@
 ja:
   title: 'Stalck'
+  message_searchers:
+    type:
+      user:    'ユーザ'
+      message: 'メッセージ'

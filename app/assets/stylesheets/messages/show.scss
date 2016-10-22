@@ -7,6 +7,18 @@
           height: 48px;
           background-size: cover;
         }
+        .message__attachments {
+          .attachments__attachment {
+            border-left: 5px solid;
+            padding-left: 10px;
+
+            .attachment__image {
+              width:  128px;
+              height: 128px;
+              background-size: cover;
+            }
+          }
+        }
       }
     }
   }

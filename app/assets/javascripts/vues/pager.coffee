@@ -1,9 +1,10 @@
 Stalcks.Vues.Pager =
   class Pager extends Stalcks.Vues.VueBase
     data:
-      target: ''
+      type:    'user'
+      keyword: ''
 
     methods:
       onSubmit: (e) ->
         e.preventDefault()
-        Turbolinks.visit("/#{encodeURIComponent(@target)}")
+        Turbolinks.visit("/#{@type}/#{encodeURIComponent(@keyword)}") if @keyword != ''

@@ -16,15 +16,15 @@ class User
   api_singleton_method :all, 'users.list', :members
 
   class << self
-    # IDからユーザを探す。
-    # @return [User, Nil] ユーザ
+    # Find user by id.
+    # @return [User, Nil] user
     def find_by_id(id)
       dictionary[id]
     end
 
     private
-    # ユーザ辞書
-    # @return [Hash] ユーザ辞書
+    # User dictionary.
+    # @return [Hash] dictionary.
     def dictionary
       Rails.cache.fetch('User.dictionary', expires_in: 5.minutes) do
         all.map { |user| [user.id, user] }.to_h

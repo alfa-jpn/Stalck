@@ -1,16 +1,26 @@
 .messages.show
-  .header
+  header
     h1.show__title
-      = @target
+      - if @type == MessageSearchers::Type::USER
+        | @#{@keyword}
+      - else
+        = @keyword
 
-  .main#js-messages data-target=@target
+  main#js-messages
     ul.show__messages
       li.messages__message v-for='message in messages'
         .message__user-icon   v-bind:style='"background-image: url(" + message.user_icon + ")"'
         .message__user-name   v-text='message.user_name'
-        .message__date        v-text='message.date'
-        .message__content     v-text='message.content'
-        .message__attachments v-text='message.attachments'
+        a.message__date       v-text='message.date' v-bind:href='message.link'
+        .message__channel     v-text='message.channel.name'
+        .message__content     v-html='message.content'
+        .message__attachments
+          .attachments__attachment v-for='attachment in message.attachments' v-bind:style='"border-color:#" + attachment.color'
+            .a v-text='attachment.color'
+            .attachment__title   v-text='attachment.title'
+            .attachment__content v-html='attachment.content'
+            .attachment__image   v-if='!!attachment.image' v-bind:style='"background-image: url(" + attachment.image + ")"'
+
 
 coffee:
   new Vue(new Stalcks.Vues.MessageLoader('#js-messages'))

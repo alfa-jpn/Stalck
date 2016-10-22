@@ -1,6 +1,10 @@
 .messages.index
   form#js-pager.index__form v-on:submit='onSubmit'
-    input v-model='target'
+    select v-model='type'
+      - MessageSearchers::Type.each do |type|
+        option value=type.downcase
+          = type.t
+    input v-model='keyword'
     button
       | Watching you
 
