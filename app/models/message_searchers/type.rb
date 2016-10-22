@@ -7,12 +7,14 @@ module MessageSearchers
     # @param [String] keyword keyword.
     # @return [String] query
     def create_query(keyword)
-      case self
-        when USER
-          "from:@#{keyword}"
-        when MESSAGE
-          "*#{keyword}*"
-      end
+      keyword.split(' ').map { |word|
+        case self
+          when USER
+            "from:@#{word}"
+          when MESSAGE
+            "*#{word}* \"#{word}\""
+        end
+      }.join(' ')
     end
   end
 end

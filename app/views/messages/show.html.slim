@@ -1,16 +1,17 @@
+- title = @keyword
+- title = @keyword.split(' ').map { |word| "@#{word}" }.join(' ') if @type == MessageSearchers::Type::USER
+- content_for(:title) { "#{title} | #{t('title')}" }
+
 .messages.show
   header.show__header
     h1.show__title
-      - if @type == MessageSearchers::Type::USER
-        | @#{@keyword}
-      - else
-        = @keyword
+      = title
 
   main.show__content
     section.content__main#js-messages
       ul.main__messages
         li.messages__message v-for='message in messages'
-          .message__user-icon v-bind:style='"background-image: url(" + message.user_icon + ")"'
+          .message__user-icon v-bind:style='message.user_icon ? "background-image: url(" + message.user_icon + ")" : null'
           .message__content
             .content__header
               .header__user-name v-text='message.user_name'
@@ -21,6 +22,10 @@
               .attachments__attachment v-for='attachment in message.attachments' v-bind:style='"border-color:#" + attachment.color'
                 .attachment__title v-text='attachment.title'
                 .attachment__text  v-html='attachment.text'
+                .attachment__fields
+                  div v-for='field in attachment.fields' v-bind:class='"fields__field fields__field--" + field.type'
+                    .field__title v-text='field.title'
+                    .field__text  v-html='field.text'
                 .attachment__image v-if='!!attachment.image' v-bind:style='"background-image: url(" + attachment.image + ")"'
     section.content__sidebar
       | サイドバー

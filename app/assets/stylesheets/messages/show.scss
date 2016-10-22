@@ -28,6 +28,7 @@
               height: 48px;
               float: left;
 
+              background: #eee;
               background-size: cover;
               border-radius: 5px;
             }
@@ -53,15 +54,40 @@
                 }
               }
 
-              .message__attachments {
+              .content__attachments {
                 .attachments__attachment {
-                  border-left: 5px solid;
+                  width: 100%;
+                  margin: 5px 0;
                   padding-left: 10px;
+
+                  border-left: 5px solid;
+
+                  .attachment__title {
+                    font-weight: bold;
+                  }
 
                   .attachment__image {
                     width: 128px;
                     height: 128px;
                     background-size: cover;
+                  }
+
+                  .attachment__fields {
+                    overflow: hidden;
+
+                    .fields__field {
+                      width: 100%;
+                      margin: 10px 10px 10px 0;
+                      float: left;
+
+                      &.fields__field--shortly {
+                        width: 45%;
+                      }
+
+                      .field__title {
+                        font-weight: bold;
+                      }
+                    }
                   }
                 }
               }

@@ -5,7 +5,8 @@ module MessagesHelper
   # @return [String] replaced message
   def decode_message(message)
     if message.present?
-      replace_links(message)
+      message = replace_links(message)
+      replace_lines(message)
     else
       nil
     end
@@ -27,6 +28,15 @@ module MessagesHelper
         else
           "<a href='#{link}'>#{label.present? ? label : link}</a>"
       end
+    end
+  end
+
+  # Replace break line code.
+  # @param [String] message
+  # @return [String] replaced message
+  def replace_lines(message)
+    message.gsub(/\r?\n/) do
+      '<br>'
     end
   end
 end

@@ -16,5 +16,11 @@ json.messages @messages do |message|
     json.text   decode_message(attachment['text'])
     json.image  attachment['image_url']
     json.color  attachment['color'] || 'ddd'
+
+    json.fields attachment['fields'] do |field|
+      json.title field['title']
+      json.text  decode_message(field['value'])
+      json.type  field['short'] ? 'shortly' : 'normal'
+    end
   end
 end
