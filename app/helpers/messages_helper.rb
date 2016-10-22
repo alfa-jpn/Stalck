@@ -5,37 +5,24 @@ module MessagesHelper
   # @return [String] replaced message
   def decode_message(message)
     if message.present?
-      message = replace_links_and_emojis(message)
-      replace_lines(message)
+      message.gsub(/```([\s\S]+?)```\r?\n|<(.+?)>|:([a-z0-9_-]+?):|\r?\n/) do |match|
+        case match[0]
+          when '`'
+            "<pre>#{$1}</pre>"
+          when '<'
+            replace_link($2)
+          when ':'
+            replace_emoji($3)
+          else
+            '<br>'
+        end
+      end
     else
       nil
     end
   end
 
   private
-
-  # Replace message link.
-  # @param [String] message
-  # @return [String] replaced message
-  def replace_links_and_emojis(message)
-    message.gsub(/<(.+?)>|:([a-z0-9_-]+?):/) do |match|
-      case match[0]
-        when '<'
-          replace_link($1)
-        when ':'
-          replace_emoji($2)
-      end
-    end
-  end
-
-  # Replace break line code.
-  # @param [String] message
-  # @return [String] replaced message
-  def replace_lines(message)
-    message.gsub(/\r?\n/) do
-      '<br>'
-    end
-  end
 
   # Replace message link.
   # @param [String] text
@@ -52,7 +39,7 @@ module MessagesHelper
           when '!'
             "@#{link[1..-1]}"
           else
-            "<a href='#{link}'>#{label.present? ? label : link}</a>"
+            "<a href='#{link}' target='_blank'>#{label.present? ? label : link}</a>"
         end
     end
   end

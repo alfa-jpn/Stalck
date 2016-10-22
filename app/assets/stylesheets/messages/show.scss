@@ -50,6 +50,22 @@
               width: $main-width - 100px;
               float: right;
 
+              %content__text-base {
+                line-height: 20px;
+
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+
+                pre {
+                  font-size: 12px;
+                  margin: 5px 0;
+                  padding: 5px;
+                  background: #eee;
+                }
+              }
+
               .content__header {
                 overflow: hidden;
 
@@ -68,12 +84,7 @@
               }
 
               .content__text {
-                line-height: 20px;
-
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
+                @extend %content__text-base;
               }
 
               .content__attachments {
@@ -106,7 +117,9 @@
                     }
                   }
 
-
+                  .attachment__text {
+                    @extend %content__text-base;
+                  }
 
                   .attachment__image {
                     width: 128px;
@@ -128,6 +141,10 @@
 
                       .field__title {
                         font-weight: bold;
+                      }
+
+                      .field__text {
+                        @extend %content__text-base;
                       }
                     }
                   }
