@@ -41,7 +41,6 @@ Stalcks.Vues.MessageLoader =
             return true if message.user_name == user
         else
           for keyword in @keywords
-            console.log(message.text)
             return true if @isIncludingKeyword(message.text, keyword)
             for attachment in message.attachments
               return true if @isIncludingKeyword(attachment.title,       keyword)

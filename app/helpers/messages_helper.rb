@@ -22,6 +22,18 @@ module MessagesHelper
     end
   end
 
+  # Return emoji path.
+  # @param [String] name
+  # @return [String] replaced message
+  def emoji_path(name)
+    case
+      when emoji = CustomEmoji.find_by_name(name)
+        emoji
+      when emoji = Emoji.find_by_alias(name)
+        image_path("emoji/#{emoji.image_filename}")
+    end
+  end
+
   private
 
   # Replace message link.
@@ -49,10 +61,8 @@ module MessagesHelper
   # @return [String] replaced emoji
   def replace_emoji(text)
     case
-      when emoji = CustomEmoji.find_by_name(text)
-        "<img src='#{emoji}'>"
-      when emoji = Emoji.find_by_alias(text)
-        "<img src='#{image_path("emoji/#{emoji.image_filename}")}'>"
+      when emoji = emoji_path(text)
+        "<img src='#{emoji}' alt='#{text}'>"
       else
        ":#{text}:"
     end
