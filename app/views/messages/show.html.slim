@@ -23,7 +23,7 @@
               .header__user-name v-text='message.user_name'
               a.header__date     v-text='message.date'         v-bind:href='message.link'
               a.header__channel  v-text='message.channel.name' v-bind:href='message.link'
-            .content__content v-html='message.text'
+            .content__text v-html='message.text'
             .content__attachments
               .attachments__attachment v-for='attachment in message.attachments' v-bind:style='"border-color:#" + attachment.color'
                 .attachment__title v-text='attachment.title'

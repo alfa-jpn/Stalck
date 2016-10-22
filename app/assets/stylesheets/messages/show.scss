@@ -67,6 +67,15 @@
                 }
               }
 
+              .content__text {
+                line-height: 20px;
+
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+
               .content__attachments {
                 .attachments__attachment {
                   width: $main-width - 120px;
