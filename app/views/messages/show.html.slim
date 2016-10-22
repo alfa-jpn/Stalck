@@ -21,14 +21,27 @@
             .content__attachments
               .attachments__attachment v-for='attachment in message.attachments' v-bind:style='"border-color:#" + attachment.color'
                 .attachment__title v-text='attachment.title'
-                .attachment__text  v-html='attachment.text'
+                .attachment__author v-if='!!attachment.author_name'
+                  .author__icon v-bind:style='attachment.author_icon ? "background-image: url(" + attachment.author_icon + ")" : null'
+                  .author__name v-text='attachment.author_name'
+                .attachment__text v-html='attachment.text'
                 .attachment__fields
                   div v-for='field in attachment.fields' v-bind:class='"fields__field fields__field--" + field.type'
                     .field__title v-text='field.title'
                     .field__text  v-html='field.text'
                 .attachment__image v-if='!!attachment.image' v-bind:style='"background-image: url(" + attachment.image + ")"'
+
     section.content__sidebar
-      | サイドバー
+      h2.sidebar__title
+        = t('.other_keywords')
+      ul.sidebar__keywords
+        - @histories.each do |history|
+          li.keywords__keyword
+            a href=show_path(type: history[:type], keyword: history[:keyword])
+              - if history[:type] == MessageSearchers::Type::USER.downcase
+                = history[:keyword].split(' ').map {|u| "@#{u}" }.join(' ')
+              - else
+                = history[:keyword]
 
 coffee:
   new Vue(new Stalcks.Vues.MessageLoader('#js-messages'))

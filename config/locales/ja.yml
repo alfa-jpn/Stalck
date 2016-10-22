@@ -1,6 +1,12 @@
 ja:
   title: 'Stalck'
+
   message_searchers:
     type:
       user:    'ユーザ'
       message: 'メッセージ'
+
+  messages:
+    index:
+    show:
+      other_keywords: '過去に検索されたワード'

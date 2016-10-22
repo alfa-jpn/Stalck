@@ -56,7 +56,7 @@
 
               .content__attachments {
                 .attachments__attachment {
-                  width: 100%;
+                  width: $main-width - 120px;
                   margin: 5px 0;
                   padding-left: 10px;
 
@@ -65,6 +65,26 @@
                   .attachment__title {
                     font-weight: bold;
                   }
+
+                  .attachment__author {
+                    overflow: hidden;
+                    line-height: 15px;
+
+                    .author__icon {
+                      width: 15px;
+                      height: 15px;
+                      margin-right: 5px;
+
+                      background: #eee;
+                      background-size: cover;
+                      border-radius: 5px;
+
+                      display: inline-block;
+                      float: left;
+                    }
+                  }
+
+
 
                   .attachment__image {
                     width: 128px;
@@ -99,6 +119,39 @@
       .content__sidebar {
         width: $sidebar-width;
         float: right;
+
+        .sidebar__title {
+          font-size: 18px;
+          margin: 0;
+        }
+
+        .sidebar__keywords {
+          padding: 0;
+          margin: 5px 0;
+          overflow: hidden;
+
+          .keywords__keyword {
+            margin: 2px 2px 2px 0;
+            float: left;
+
+            font-size: 12px;
+            background: #eee;
+            border: solid 1px #ddd;
+            border-radius: 5px;
+
+            &:hover {
+              background: #fafafa;
+            }
+
+            a {
+              display: block;
+              padding: 1px 8px;
+
+              color: #333;
+              text-decoration: none;
+            }
+          }
+        }
       }
     }
   }

@@ -11,11 +11,12 @@ json.messages @messages do |message|
   end
 
   json.attachments message.attachments do |attachment|
-    json.title  attachment['title']
-    json.author attachment['author']
-    json.text   decode_message(attachment['text'])
-    json.image  attachment['image_url']
-    json.color  attachment['color'] || 'ddd'
+    json.title       attachment['title']
+    json.author_icon attachment['author_icon']
+    json.author_name attachment['author_name']
+    json.text        decode_message(attachment['text'])
+    json.image       attachment['image_url']
+    json.color       attachment['color'] || 'ddd'
 
     json.fields attachment['fields'] do |field|
       json.title field['title']

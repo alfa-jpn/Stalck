@@ -12,7 +12,7 @@ module MessageSearchers
           when USER
             "from:@#{word}"
           when MESSAGE
-            "*#{word}* \"#{word}\""
+            "*#{word}*"
         end
       }.join(' ')
     end

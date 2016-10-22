@@ -1,6 +1,12 @@
 en:
   title: 'Stalck'
+
   message_searchers:
     type:
       user:    'User'
       message: 'Message'
+
+  messages:
+    index:
+    show:
+      other_keywords: 'History'
