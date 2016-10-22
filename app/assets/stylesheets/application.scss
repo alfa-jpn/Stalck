@@ -2,3 +2,12 @@
  *= require_tree .
  *= require_self
  */
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+
+html, body {
+  font-family: 'Noto Sans Japanese', '游ゴシック', YuGothic, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', sans-serif;
+}
+
+li {
+  list-style: none;
+}

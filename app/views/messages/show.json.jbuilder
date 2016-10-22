@@ -3,7 +3,7 @@ json.messages @messages do |message|
   json.user_name message.username
   json.date      I18n.l(Time.at(message.ts.to_i))
   json.link      message.permalink
-  json.content   decode_message(message.text)
+  json.text      decode_message(message.text)
 
   json.channel do
     json.id   message.channel['id']
@@ -11,10 +11,10 @@ json.messages @messages do |message|
   end
 
   json.attachments message.attachments do |attachment|
-    json.title   attachment['title']
-    json.author  attachment['author']
-    json.content decode_message(attachment['text'])
-    json.image   attachment['image_url']
-    json.color   attachment['color'] || 'ddd'
+    json.title  attachment['title']
+    json.author attachment['author']
+    json.text   decode_message(attachment['text'])
+    json.image  attachment['image_url']
+    json.color  attachment['color'] || 'ddd'
   end
 end

@@ -13,6 +13,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
@@ -22,6 +23,8 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+# CSS styles
+gem 'autoprefixer-rails'
 
 # Environment
 gem 'dotenv-rails'
@@ -29,6 +32,7 @@ gem 'dotenv-rails'
 # i18n default packages.
 gem 'rails-i18n'
 
+# Enum
 gem 'inum'
 
 group :development, :test do

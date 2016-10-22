@@ -1,24 +1,78 @@
 .messages {
   &.show {
-    .show__messages {
-      .messages__message {
-        .message__user-icon {
-          width:  48px;
-          height: 48px;
-          background-size: cover;
-        }
-        .message__attachments {
-          .attachments__attachment {
-            border-left: 5px solid;
-            padding-left: 10px;
+    .show__header {
 
-            .attachment__image {
-              width:  128px;
-              height: 128px;
+    }
+
+    .show__content {
+      $sidebar-width: 300px;
+      $main-width:    1020px - $sidebar-width;
+
+      overflow: hidden;
+
+      .content__main {
+        width: $main-width;
+        float: left;
+
+        .main__messages {
+          margin:  0 20px;
+          padding: 0;
+
+          .messages__message {
+            margin: 20px 0;
+            font-size: 15px;
+            overflow: hidden;
+
+            .message__user-icon {
+              width:  48px;
+              height: 48px;
+              float: left;
+
               background-size: cover;
+              border-radius: 5px;
+            }
+
+            .message__content {
+              width: $main-width - 100px;
+              float: right;
+
+              .content__header {
+                overflow: hidden;
+
+                .header__user-name {
+                  font-weight: bold;
+                  margin-right: 5px;
+                  float: left;
+                }
+
+                .header__date, .header__channel {
+                  color: #aaa;
+                  font-size: 12px;
+                  text-decoration: none;
+                  margin-right: 5px;
+                }
+              }
+
+              .message__attachments {
+                .attachments__attachment {
+                  border-left: 5px solid;
+                  padding-left: 10px;
+
+                  .attachment__image {
+                    width: 128px;
+                    height: 128px;
+                    background-size: cover;
+                  }
+                }
+              }
             }
           }
         }
+      }
+
+      .content__sidebar {
+        width: $sidebar-width;
+        float: right;
       }
     }
   }
