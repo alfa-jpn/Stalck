@@ -69,7 +69,7 @@ module Concerns::Models
       # @return [URI] URI
       def create_uri(method, params)
         URI.parse([Concerns::Models::SlackAdapter::API_URL, method].join('/')).tap do |uri|
-          uri.query = URI.encode_www_form(params.merge(token: Concerns::Models::SlackAdapter::TOKEN))
+          uri.query = URI.encode_www_form({ token: Concerns::Models::SlackAdapter::TOKEN }.merge(params))
         end
       end
     end
