@@ -2,8 +2,6 @@ module Concerns::Models
   module SlackAdapter
     extend ActiveSupport::Concern
 
-    API_URL       = ENV['SLACK_API_URL']
-    TOKEN         = ENV['SLACK_TOKEN']
     CACHE_EXPIRES = 5.seconds
 
     # Initialize instance.
@@ -68,8 +66,8 @@ module Concerns::Models
       # @param [Hash]   params Parameters
       # @return [URI] URI
       def create_uri(method, params)
-        URI.parse([Concerns::Models::SlackAdapter::API_URL, method].join('/')).tap do |uri|
-          uri.query = URI.encode_www_form({ token: Concerns::Models::SlackAdapter::TOKEN }.merge(params))
+        URI.parse([Stalck.config.slack.api_url, method].join('/')).tap do |uri|
+          uri.query = URI.encode_www_form({ token: Stalck.config.slack.token }.merge(params))
         end
       end
     end

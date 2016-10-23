@@ -5,10 +5,14 @@ class MessagesController < ApplicationController
 
   HISTORY_CACHE_KEY = 'Views::Keywords::History'
 
+  # GET /
   def index
 
   end
 
+  # GET /all
+  # GET /user/*
+  # GET /messages/*
   def show
     respond_to do |format|
       format.json do
@@ -30,6 +34,29 @@ class MessagesController < ApplicationController
           end
         end
       end
+    end
+  rescue RuntimeError => e
+    if e.message == 'user_is_bot'
+      render :token_error
+    else
+      raise
+    end
+  end
+
+  # GET /callback
+  def registration_token
+    auth = OAuth.find(
+      client_id:     Stalck.config.slack.client_id,
+      client_secret: Stalck.config.slack.client_secret_key,
+      code:          params['code'],
+      redirect_uri:  oauth_callback_url
+    )
+
+    if auth.team_id == Stalck.config.slack.team_id
+      Stalck.config.slack.searchable_token = auth.access_token
+      redirect_to root_path
+    else
+      raise "#{auth.team_name} is not permitted team."
     end
   end
 
@@ -54,8 +81,9 @@ class MessagesController < ApplicationController
   # @param [Integer] count Get count.
   # @return <MessageSearcher> result.
   def search_message_in_open_channel(query: 'after:yesterday', count: 20)
-    Rails.cache.fetch("Messages::#{Digest::MD5.hexdigest(query)}::#{count}", expires_in: 5.seconds) do
-      MessageSearcher.search(query: query,count: count , sort: :timestamp).messages.select do |message|
+    params = {query: query,count: count , sort: :timestamp}
+    Rails.cache.fetch("Messages::#{Digest::MD5.hexdigest(params.to_json)}", expires_in: 5.seconds) do
+      MessageSearcher.search(params.merge(token: Stalck.config.slack.searchable_token)).messages.select do |message|
         if (id = message.channel.try(:[], 'id')).present?
           (id.first == 'C' && Channel.find_by_id(id).present?)
         else

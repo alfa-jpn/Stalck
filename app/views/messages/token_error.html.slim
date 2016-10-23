@@ -1,0 +1,14 @@
+.messages.token-error
+  header
+    h1
+      | ギブミートークン
+
+  main
+    - params = { \
+      team_id:      Stalck.config.slack.team_id,
+      client_id:    Stalck.config.slack.client_id,
+      redirect_uri: oauth_callback_url,
+      scope:        'search:read',
+    }
+    a href="#{Stalck.config.slack.oauth_url}?#{params.to_query}"
+      | ok
