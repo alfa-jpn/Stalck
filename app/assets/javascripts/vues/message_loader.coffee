@@ -1,36 +1,26 @@
 Stalcks.Vues.MessageLoader =
   class MessageLoader extends Stalcks.Vues.VueBase
-    mounted: ->
+    ready: ->
       @messages  = JSON.parse(@$el.dataset.messages)['messages']
       @keywords  = @$el.dataset.keyword?.split(' ')
       @type      = @$el.dataset.type
+      @timestamp = parseFloat(@messages[0]?.timestamp || 0)
       @updateMessages()
 
     data:
       messages:  []
       keywords:  ''
       type:      ''
-
-    computed:
-      currentlyTimestamp: ->
-        parseFloat(@messages[0]?.timestamp || 0)
+      timestamp: 0
 
     methods:
       updateMessages: ->
         @clearMessageType()
-        timestamp =  parseFloat(@messages[0]?.timestamp || 0)
 
-        $.ajax(url: "/all.json", method: 'get', data: { timestamp: @currentlyTimestamp }).done( (data) =>
+        $.ajax(url: "/all.json", method: 'get', data: { timestamp: @timestamp }).done( (data) =>
           return if data.messages.length < 1
-
-          for i in [(data.messages.length - 1)..0]
-            message   = data.messages[i]
-            if @currentlyTimestamp < parseFloat(message.timestamp || 0)
-              if @type == 'all' || @isIncludingKeywords(message)
-                message.type = 'newly'
-                @messages.unshift(message)
-
-          @messages.splice(100, data.messages.length)
+          @timestamp = parseFloat(data.messages[0].timestamp || 0)
+          @messages  = @filterMessages(data.messages).concat(@messages).splice(0, 100)
         ).always( =>
           setTimeout(@updateMessages, 5500)
         )
@@ -38,6 +28,16 @@ Stalcks.Vues.MessageLoader =
       clearMessageType: ->
         for message in @messages
           message.type = '' if message.type != ''
+
+      filterMessages: (messages) ->
+        filteredMessages = []
+
+        for message in messages
+          if @type == 'all' || @isIncludingKeywords(message)
+            message.type = 'newly'
+            filteredMessages.push(message)
+
+        filteredMessages
 
       isIncludingKeywords: (message) ->
         if @type == 'user'
