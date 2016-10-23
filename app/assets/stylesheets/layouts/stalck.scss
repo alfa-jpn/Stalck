@@ -1,4 +1,13 @@
 .stalck {
-  width: 1020px;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+
+  .stalck__header {
+    background: #333;
+  }
+
+  .stalck__content {
+    width: 1020px;
+    margin: 0 auto;
+  }
 }

@@ -1,0 +1,21 @@
+section.layouts.header
+  h1.header__title
+    a href=root_path
+      = t('title')
+
+  section.header__pager
+    form#js-pager.index__form v-on:submit='onSubmit'
+        select v-model='type'
+          - [MessageSearchers::Type::USER, MessageSearchers::Type::MESSAGE].each do |type|
+            option value=type.downcase
+              = type.t
+        input v-model='keyword'
+        button
+          | 検索
+
+  section.header__links
+    a.links__link href=show_path(type: MessageSearchers::Type::ALL.downcase)
+      = MessageSearchers::Type::ALL.t
+
+coffee:
+  new Vue(new Stalcks.Vues.Pager('#js-pager'))

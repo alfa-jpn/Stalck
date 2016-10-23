@@ -1,12 +1,4 @@
 .messages.index
-  form#js-pager.index__form v-on:submit='onSubmit'
-    select v-model='type'
-      - [MessageSearchers::Type::USER, MessageSearchers::Type::MESSAGE].each do |type|
-        option value=type.downcase
-          = type.t
-    input v-model='keyword'
-    button
-      | Watching you
-
-coffee:
-  new Vue(new Stalcks.Vues.Pager('#js-pager'))
+  header
+    h1
+      | Enjoy monitoring!!

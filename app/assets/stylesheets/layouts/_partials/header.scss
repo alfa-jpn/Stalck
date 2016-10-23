@@ -1,0 +1,77 @@
+.layouts.header {
+  width: 1020px;
+  height: 50px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+
+  .header__title {
+    margin: 0;
+    padding: 0;
+
+    font-size: 35px;
+    line-height: 50px;
+
+    a {
+      color: #eee;
+      text-decoration: none;
+    }
+  }
+
+  .header__pager {
+
+    %pager__base {
+      width: 150px;
+      height: 42px;
+      margin: 4px 0;
+
+      color: #eee;
+      font-size: 25px;
+
+      background: transparent;
+      border: 1px solid #eee;
+    }
+
+    input {
+      @extend %pager__base;
+      width: 300px;
+      height: 38px;
+      padding: 1px 10px;
+    }
+
+    select {
+      @extend %pager__base;
+      border-radius: 5px 0 0 5px;
+      border-right: none;
+    }
+
+    button {
+      @extend %pager__base;
+      border-radius: 0 5px 5px 0;
+      border-left: none;
+    }
+  }
+
+  .header__links {
+    .links__link {
+      margin: 4px;
+      padding: 0 10px;
+      display: block;
+
+      color: #eee;
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 40px;
+      text-decoration: none;
+
+      border: #eee 1px solid;
+      border-radius: 5px;
+
+      &:hover {
+        color: #333;
+        background-color: #eee;
+      }
+    }
+  }
+}

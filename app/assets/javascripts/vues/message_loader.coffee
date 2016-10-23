@@ -15,6 +15,7 @@ Stalcks.Vues.MessageLoader =
 
     methods:
       updateMessages: ->
+        return unless document.body.contains(@$el)
         @clearMessageType()
 
         $.ajax(url: "/all.json", method: 'get', data: { timestamp: @timestamp }).done( (data) =>

@@ -9,4 +9,7 @@ html
     = javascript_include_tag :application
   body
     .stalck
-      = yield
+      .stalck__header
+        = render partial: 'layouts/_partials/header'
+      .stalck__content
+        = yield
