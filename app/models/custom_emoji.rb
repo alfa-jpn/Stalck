@@ -21,7 +21,7 @@ class CustomEmoji
     # User dictionary.
     # @return [Hash] dictionary.
     def dictionary
-      Rails.cache.fetch('Emoji.dictionary', expires_in: 5.minutes) do
+      Rails.cache.fetch('Emoji.Dictionary', expires_in: 5.minutes) do
         all.emoji
       end
     end

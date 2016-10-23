@@ -2,7 +2,7 @@ json.messages messages do |message|
   json.id        Digest::SHA256.hexdigest(message.to_json)
   json.user_icon message.user.try(:profile).try(:[], 'image_72') || emoji_path(message.username) || ''
   json.user_name message.username
-  json.date      I18n.l(Time.at(message.ts.to_i))
+  json.date      I18n.l(Time.zone.at(message.ts.to_i))
   json.link      message.permalink
   json.text      decode_message(message.text)
   json.timestamp message.ts

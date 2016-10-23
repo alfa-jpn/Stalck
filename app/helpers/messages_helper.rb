@@ -18,7 +18,7 @@ module MessagesHelper
         end
       end
     else
-      nil
+      ''
     end
   end
 
