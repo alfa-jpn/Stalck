@@ -11,3 +11,8 @@ en:
     index:
     show:
       other_keywords: 'History'
+    token_error:
+      give_me_token: 'Give met token'
+      description: |-
+        Please give me token for search api access.
+      authentiate: 'authenticate'

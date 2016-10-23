@@ -1,0 +1,9 @@
+.messages {
+  &.token-error {
+    .token-error__description {
+      line-height: 15px;
+      font-size: 12px;
+      padding-left: 20px;
+    }
+  }
+}
