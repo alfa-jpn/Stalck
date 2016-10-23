@@ -4,35 +4,35 @@ Stalcks.Vues.MessageLoader =
       @messages  = JSON.parse(@$el.dataset.messages)['messages']
       @keywords  = @$el.dataset.keyword?.split(' ')
       @type      = @$el.dataset.type
-      @timestamp = parseFloat(@messages[0]?.timestamp || 0)
       @updateMessages()
 
     data:
       messages:  []
       keywords:  ''
       type:      ''
-      timestamp: 0
+
+    computed:
+      currentlyTimestamp: ->
+        parseFloat(@messages[0]?.timestamp || 0)
 
     methods:
       updateMessages: ->
-        $.ajax(url: "/all.json", method: 'get', data: { timestamp: @timestamp }).done( (data) =>
+        @clearMessageType()
+        timestamp =  parseFloat(@messages[0]?.timestamp || 0)
+
+        $.ajax(url: "/all.json", method: 'get', data: { timestamp: @currentlyTimestamp }).done( (data) =>
           return if data.messages.length < 1
 
           for i in [(data.messages.length - 1)..0]
             message   = data.messages[i]
-            timestamp = parseFloat(message.timestamp)
-            if @timestamp < timestamp
-              @timestamp = timestamp
+            if @currentlyTimestamp < parseFloat(message.timestamp || 0)
               if @type == 'all' || @isIncludingKeywords(message)
                 message.type = 'newly'
                 @messages.unshift(message)
 
           @messages.splice(100, data.messages.length)
         ).always( =>
-          setTimeout( =>
-            @clearMessageType()
-            setTimeout(@updateMessages, 2500)
-          , 3000)
+          setTimeout(@updateMessages, 5500)
         )
 
       clearMessageType: ->
