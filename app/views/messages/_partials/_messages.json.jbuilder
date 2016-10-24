@@ -1,6 +1,6 @@
 json.messages messages do |message|
   json.id        Digest::SHA256.hexdigest(message.to_json)
-  json.user_icon message.user.try(:profile).try(:[], 'image_72') || emoji_path(message.username) || ''
+  json.user_icon message.user.try(:profile).try(:[], 'image_72') || emoji_path(message.username) || image_path('Slack_Mark_Black_Web.png')
   json.user_name message.username
   json.date      I18n.l(Time.zone.at(message.ts.to_i))
   json.link      message.permalink
@@ -14,7 +14,7 @@ json.messages messages do |message|
 
   json.attachments message.attachments do |attachment|
     json.title       attachment['title']
-    json.author_icon attachment['author_icon'] || ''
+    json.author_icon attachment['author_icon'] || image_path('Slack_Mark_Black_Web.png')
     json.author_name attachment['author_name']
     json.text        decode_message(attachment['text'])
     json.image       attachment['image_url']
