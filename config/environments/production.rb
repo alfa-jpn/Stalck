@@ -50,7 +50,7 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
-  config.cache_store = :memory_store, { size: 64.megabytes }
+  config.cache_store = :memory_store, { size: 128.megabytes }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
