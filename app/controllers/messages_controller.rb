@@ -1,8 +1,9 @@
 class MessagesController < ApplicationController
-  before_action :set_keyword,   only: [:show]
-  before_action :set_type,      only: [:show]
-  before_action :set_timestamp, only: [:show]
-  before_action :set_histories
+  before_action :set_keyword,          only: [:show]
+  before_action :set_type,             only: [:show]
+  before_action :set_timestamp,        only: [:show]
+  before_action :set_histories,        only: [:index, :show]
+  before_action :require_curent_user!, only: [:create]
 
   HISTORY_CACHE_KEY = 'Views::Keywords::History'
 
@@ -27,7 +28,7 @@ class MessagesController < ApplicationController
           search_message_in_open_channel(query: @type.create_query(@keyword), count: 100).take(20).tap do |messages|
             @messages = messages
             if @messages.any? and @histories.none? { |h| h[:type] == @type.downcase and h[:keyword] == @keyword }
-              Rails.cache.write(HISTORY_CACHE_KEY, @histories.unshift({ type: @type.downcase, keyword: @keyword }).take(50))
+              Rails.cache.write(HISTORY_CACHE_KEY, @histories.unshift({ type: @type.downcase, keyword: @keyword }).take(100))
             end
           end
         else
@@ -62,6 +63,17 @@ class MessagesController < ApplicationController
     end
   end
 
+  # POST /messages
+  def create
+    Message.create({
+      channel:  params[:channel],
+      text:     params[:message],
+      username: current_user.name,
+      icon_url: current_user.profile['image_72']
+    })
+    head :ok
+  end
+
   private
   # Set `@keyword`
   def set_keyword
@@ -81,6 +93,11 @@ class MessagesController < ApplicationController
   # Set `@timestamp`
   def set_timestamp
     @timestamp = (params[:timestamp] || 0).to_f
+  end
+
+  # Require current_user
+  def require_curent_user!
+    raise unless current_user.present?
   end
 
   # Search newly messages in open channel.

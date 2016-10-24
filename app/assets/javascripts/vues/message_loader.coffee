@@ -8,12 +8,35 @@ Stalcks.Vues.MessageLoader =
       @updateMessages()
 
     data:
-      messages:  []
-      keywords:  ''
-      type:      ''
-      timestamp: 0
+      messages:     []
+      keywords:     ''
+      type:         ''
+      timestamp:    0
+      replyTo:      null
+      replyMessage: ''
+
+    computed:
+      replyWindowStatus: ->
+        if @replyTo?
+          'opened'
+        else
+          'closed'
 
     methods:
+      onReplyClick: (e) ->
+        e.preventDefault()
+        @replyTo = e.target.dataset.channel
+
+      onReplySubmit: (e) ->
+        e.preventDefault()
+        if @replyMessage != ''
+          $.ajax(url: '/messages', method: 'post', data: { message: @replyMessage, channel: @replyTo })
+          @replyMessage = ''
+          @onReplyClose()
+
+      onReplyClose: ->
+        @replyTo = null
+
       updateMessages: ->
         return unless document.body.contains(@$el)
         @clearMessageType()

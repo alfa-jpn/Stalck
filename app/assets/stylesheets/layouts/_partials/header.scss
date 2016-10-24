@@ -22,12 +22,12 @@
   .header__pager {
 
     %pager__base {
-      width: 150px;
-      height: 42px;
-      margin: 4px 0;
+      width: 100px;
+      height: 37px;
+      margin: 6px 0;
 
       color: #eee;
-      font-size: 25px;
+      font-size: 18px;
 
       background: transparent;
       border: 1px solid #eee;
@@ -35,13 +35,14 @@
 
     input {
       @extend %pager__base;
-      width: 300px;
-      height: 38px;
+      width: 250px;
+      height: 33px;
       padding: 1px 10px;
     }
 
     select {
       @extend %pager__base;
+      width: 125px;
       border-radius: 5px 0 0 5px;
       border-right: none;
     }
@@ -54,15 +55,21 @@
   }
 
   .header__links {
+    width: 300px;
+    overflow: hidden;
+
     .links__link {
-      margin: 4px;
+      width: 100px;
+      margin: 6px 4px;
       padding: 0 10px;
       display: block;
+      float: left;
 
       color: #eee;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: bold;
-      line-height: 40px;
+      line-height: 35px;
+      text-align: center;
       text-decoration: none;
 
       border: #eee 1px solid;

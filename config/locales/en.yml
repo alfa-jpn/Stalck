@@ -11,6 +11,7 @@ en:
     index:
     show:
       other_keywords: 'History'
+      reply:          '返信'
     token_error:
       give_me_token: 'Give met token'
       description: |-

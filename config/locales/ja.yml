@@ -11,6 +11,7 @@ ja:
     index:
     show:
       other_keywords: '過去に検索されたワード'
+      reply:          '返信'
     token_error:
       give_me_token: 'ギブミートークンエラー'
       description: |-

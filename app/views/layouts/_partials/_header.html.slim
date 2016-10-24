@@ -1,3 +1,10 @@
+- login_params = {\
+  team_id:      Stalck.config.slack.team_id,
+  client_id:    Stalck.config.slack.client_id,
+  redirect_uri: oauth_login_callback_url,
+  scope:        'users.profile:read',
+}
+
 section.layouts.header
   h1.header__title
     a href=root_path
@@ -16,6 +23,13 @@ section.layouts.header
   section.header__links
     a.links__link href=show_path(type: MessageSearchers::Type::ALL.downcase)
       = MessageSearchers::Type::ALL.t
+
+    - if current_user.blank?
+      a.links__link href="#{Stalck.config.slack.oauth_url}?#{login_params.to_query}"
+        | ログイン
+    - else
+      a.links__link href=sign_out_path
+        | ログアウト
 
 coffee:
   new Vue(new Stalcks.Vues.Pager('#js-pager'))
