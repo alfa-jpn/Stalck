@@ -13,7 +13,7 @@ section.layouts.header
   section.header__pager
     form#js-pager.index__form v-on:submit='onSubmit'
         select v-model='type'
-          - [MessageSearchers::Type::USER, MessageSearchers::Type::MESSAGE].each do |type|
+          - [MessageSearchers::Type::USER, MessageSearchers::Type::MESSAGE, MessageSearchers::Type::CHANNEL].each do |type|
             option value=type.downcase
               = type.t
         input v-model='keyword'

@@ -261,11 +261,15 @@
             }
 
             a {
+              max-width: 250px;
               display: block;
               padding: 1px 8px;
+              overflow: hidden;
 
               color: #333;
               text-decoration: none;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }

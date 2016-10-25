@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :set_keyword,          only: [:show]
   before_action :set_type,             only: [:show]
+  before_action :set_keyword!,         only: [:show]
   before_action :set_timestamp,        only: [:show]
   before_action :set_histories,        only: [:index, :show]
   before_action :require_curent_user!, only: [:create]
@@ -76,8 +76,12 @@ class MessagesController < ApplicationController
 
   private
   # Set `@keyword`
-  def set_keyword
-    @keyword = params[:keyword].try(:strip)
+  def set_keyword!
+    if params[:keyword].present?
+      @keyword = params[:keyword].strip.gsub(/[#\@]/, '')
+    else
+      redirect_to show_path(type: MessageSearchers::Type::ALL.underscore) if @type != MessageSearchers::Type::ALL
+    end
   end
 
   # Set `@histories`

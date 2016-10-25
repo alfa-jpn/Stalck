@@ -64,19 +64,23 @@ Stalcks.Vues.MessageLoader =
         filteredMessages
 
       isIncludingKeywords: (message) ->
-        if @type == 'user'
-          for user in @keywords
-            return true if message.user_name == user
-        else
-          for keyword in @keywords
-            return true if @isIncludingKeyword(message.text, keyword)
-            for attachment in message.attachments
-              return true if @isIncludingKeyword(attachment.title,       keyword)
-              return true if @isIncludingKeyword(attachment.text,        keyword)
-              return true if @isIncludingKeyword(attachment.author_name, keyword)
-              for field in attachment.fields
-                return true if @isIncludingKeyword(field.title, keyword)
-                return true if @isIncludingKeyword(field.value, keyword)
+        switch @type
+          when 'user'
+            for user in @keywords
+              return true if message.user_name == user
+          when 'channel'
+            for channel in @keywords
+              return true if message.channel.name == "##{channel}"
+          else
+            for keyword in @keywords
+              return true if @isIncludingKeyword(message.text, keyword)
+              for attachment in message.attachments
+                return true if @isIncludingKeyword(attachment.title,       keyword)
+                return true if @isIncludingKeyword(attachment.text,        keyword)
+                return true if @isIncludingKeyword(attachment.author_name, keyword)
+                for field in attachment.fields
+                  return true if @isIncludingKeyword(field.title, keyword)
+                  return true if @isIncludingKeyword(field.value, keyword)
         return false
 
       isIncludingKeyword: (target, text) ->

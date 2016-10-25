@@ -6,7 +6,7 @@ ja:
       all:     'リアルタイム'
       user:    'ユーザ'
       message: 'メッセージ'
-
+      channel: 'チャンネル'
   messages:
     index:
     show:

@@ -3,6 +3,8 @@
     - title = @type.t
   - when @type == MessageSearchers::Type::USER
     - title = @keyword.split(' ').map { |word| "@#{word}" }.join(' ')
+  - when @type == MessageSearchers::Type::CHANNEL
+    - title = @keyword.split(' ').map { |word| "##{word}" }.join(' ')
   - else
     - title = @keyword
 
@@ -14,7 +16,7 @@
       = title
 
   main.show__content
-    section.content__main#js-messages  data-type=@type.downcase data-keyword=@keyword data-messages=messages_json
+    section.content__main#js-messages  data-type=@type.underscore data-keyword=@keyword data-messages=messages_json
       ul.main__messages
         = content_tag :li, 'v-bind:id' => 'message.id', 'v-bind:class' => '"messages__message messages__message--" + message.type', 'v-for' => 'message in messages'
           .message__user-icon v-bind:style='"background-image: url(" + message.user_icon + ")"'
@@ -22,7 +24,7 @@
             .content__header
               .header__user-name v-text='message.user_name'
               a.header__date     v-text='message.date'         v-bind:href='message.link' target='_blank'
-              a.header__channel  v-text='message.channel.name' v-bind:href='message.link' target='_blank'
+              a.header__channel  v-text='message.channel.name' v-bind:href='"/channel/" + message.channel.name.substring(1)'
               a.header__reply v-bind:data-channel='message.channel.name' v-on:click='onReplyClick'
             .content__text v-html='message.text'
             .content__attachments
@@ -61,10 +63,13 @@
         - @histories.each do |history|
           li.keywords__keyword
             a href=show_path(type: history[:type], keyword: history[:keyword])
-              - if history[:type] == MessageSearchers::Type::USER.downcase
-                = history[:keyword].split(' ').map {|u| "@#{u}" }.join(' ')
-              - else
-                = history[:keyword]
+              - case
+                - when history[:type] == MessageSearchers::Type::USER.downcase
+                  = history[:keyword].split(' ').map {|u| "@#{u}" }.join(' ')
+                - when history[:type] == MessageSearchers::Type::CHANNEL.downcase
+                  = history[:keyword].split(' ').map {|c| "##{c}" }.join(' ')
+                - else
+                  = history[:keyword]
 
 coffee:
   new Vue(new Stalcks.Vues.MessageLoader('#js-messages'))

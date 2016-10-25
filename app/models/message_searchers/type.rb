@@ -3,6 +3,7 @@ module MessageSearchers
     define :ALL
     define :USER
     define :MESSAGE
+    define :CHANNEL
 
     # Create searcher query.
     # @param [String] keyword keyword.
@@ -12,6 +13,8 @@ module MessageSearchers
         case self
           when USER
             "from:@#{word}"
+          when CHANNEL
+            "in:##{word}"
           when MESSAGE
             "*#{word}*"
         end

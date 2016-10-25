@@ -6,7 +6,7 @@ en:
       all:     'All'
       user:    'User'
       message: 'Message'
-
+      channel: 'Channel'
   messages:
     index:
     show:
