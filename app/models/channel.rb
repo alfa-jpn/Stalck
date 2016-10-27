@@ -24,7 +24,7 @@ class Channel
     # Channel dictionary.
     # @return [Hash] dictionary.
     def find_with_cache(id)
-      Rails.cache.fetch("Channel.Cache.#{id}", expires_in: 5.minutes) do
+      Rails.cache.fetch("Channel.Cache.#{id}", expires_in: 12.minutes) do
         begin
           find(channel: id)
         rescue RuntimeError => e
@@ -41,7 +41,7 @@ class Channel
     # Channel dictionary.
     # @return [Hash] dictionary.
     def dictionary
-      Rails.cache.fetch('Channel.Dictionary', expires_in: 5.minutes) do
+      Rails.cache.fetch('Channel.Dictionary', expires_in: 8.minutes) do
         all.map { |user| [user.id, user] }.to_h
       end
     end

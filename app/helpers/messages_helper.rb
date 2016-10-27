@@ -5,7 +5,7 @@ module MessagesHelper
   # @return [String] replaced message
   def decode_message(message)
     if message.present?
-      message.gsub(/```([\s\S]+?)```\r?\n|<(.+?)>|:([a-z0-9_-]+?):|\r?\n/) do |match|
+      message.gsub(/```([\s\S]+?)```\r?\n?|<(.+?)>|:([a-z0-9_-]+?):|\r?\n/) do |match|
         case match[0]
           when '`'
             "<pre>#{$1}</pre>"
