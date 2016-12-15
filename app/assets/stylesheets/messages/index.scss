@@ -1,0 +1,28 @@
+.messages {
+  &.index {
+    padding: 100px 0;
+    background: image-url('computer_net_stalker_woman.png') no-repeat right bottom;
+
+    .index__header {
+      padding: 100px 0;
+
+      text-align: center;
+
+      color: #eee;
+      background: #333;
+      border-radius: 25px;
+
+      opacity: 0.9;
+
+      .header__cursor {
+        animation: cursor__blink 1s infinite;
+
+        @keyframes cursor__blink {
+          50%{
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}

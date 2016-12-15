@@ -25,3 +25,5 @@ vendor/bundle/
 .idea/
 *.iml
 
+# Environments
+.env.*

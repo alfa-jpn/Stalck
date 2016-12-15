@@ -1,0 +1,75 @@
+- case
+  - when @keyword.blank?
+    - title = @type.t
+  - when @type == MessageSearchers::Type::USER
+    - title = @keyword.split(' ').map { |word| "@#{word}" }.join(' ')
+  - when @type == MessageSearchers::Type::CHANNEL
+    - title = @keyword.split(' ').map { |word| "##{word}" }.join(' ')
+  - else
+    - title = @keyword
+
+- content_for(:title) { "#{title} | #{t('title')}" }
+- messages_json = (render partial: 'messages/_partials/messages.json', locals: {messages: @messages})
+.messages.show
+  header.show__header
+    h1.show__title
+      = title
+
+  main.show__content
+    section.content__main#js-messages  data-type=@type.underscore data-keyword=@keyword data-messages=messages_json
+      ul.main__messages
+        = content_tag :li, 'v-bind:id' => 'message.id', 'v-bind:class' => '"messages__message messages__message--" + message.type', 'v-for' => 'message in messages'
+          .message__user-icon v-bind:style='"background-image: url(" + message.user_icon + ")"'
+          .message__content
+            .content__header
+              a.header__user-name v-text='message.user_name'    v-bind:href='"/user/" + message.user_name'
+              a.header__date      v-text='message.date'         v-bind:href='message.link' target='_blank'
+              a.header__channel   v-text='message.channel.name' v-bind:href='"/channel/" + message.channel.name.substring(1)'
+              a.header__reply v-bind:data-channel='message.channel.name' v-on:click='onReplyClick'
+            .content__text v-html='message.text'
+            .content__attachments
+              .attachments__attachment v-for='attachment in message.attachments' v-bind:style='"border-color:#" + attachment.color'
+                .attachment__title v-text='attachment.title'
+                .attachment__author v-if='!!attachment.author_name'
+                  .author__icon v-bind:style='"background-image: url(" + attachment.author_icon + ")"'
+                  .author__name v-text='attachment.author_name'
+                .attachment__text v-html='attachment.text'
+                .attachment__fields
+                  div v-for='field in attachment.fields' v-bind:class='"fields__field fields__field--" + field.type'
+                    .field__title v-text='field.title'
+                    .field__text  v-html='field.text'
+                .attachment__image v-if='!!attachment.image' v-bind:style='"background-image: url(" + attachment.image + ")"'
+
+      section v-bind:class='"main__reply main__reply--" + replyWindowStatus'
+        .reply__window
+          .window__title
+            = t('.reply')
+          .window__close v-on:click='onReplyClose'
+            | ✕
+          - if current_user.present?
+            form.window__form v-on:submit='onReplySubmit'
+              textarea v-model='replyMessage'
+              button
+                = t('.reply')
+          - else
+            .window__notice
+              | この機能を使用するにはログインが必要です。
+
+
+    section.content__sidebar
+      h2.sidebar__title
+        = t('.other_keywords')
+      ul.sidebar__keywords
+        - @histories.each do |history|
+          li.keywords__keyword
+            a href=show_path(type: history[:type], keyword: history[:keyword])
+              - case
+                - when history[:type] == MessageSearchers::Type::USER.downcase
+                  = history[:keyword].split(' ').map {|u| "@#{u}" }.join(' ')
+                - when history[:type] == MessageSearchers::Type::CHANNEL.downcase
+                  = history[:keyword].split(' ').map {|c| "##{c}" }.join(' ')
+                - else
+                  = history[:keyword]
+
+coffee:
+  new Vue(new Stalcks.Vues.MessageLoader('#js-messages'))

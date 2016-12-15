@@ -1,0 +1,281 @@
+.messages {
+  &.show {
+    .show__header {
+
+    }
+
+    .show__content {
+      $sidebar-width: 300px;
+      $main-width:    1020px - $sidebar-width;
+
+      overflow: hidden;
+
+      .content__main {
+        width: $main-width;
+        float: left;
+
+        .main__messages {
+          margin:  0 20px;
+          padding: 0;
+
+          .messages__message {
+            margin: 20px 0;
+            font-size: 15px;
+            overflow: hidden;
+            border-radius: 5px;
+            word-wrap: break-word;
+
+            @keyframes messages__message---animation {
+              0% {
+                background: #bbf;
+                box-shadow: 0 0 10px #bbf;
+              }
+            }
+
+            &.messages__message--newly {
+              animation: messages__message---animation 2s ease;
+            }
+
+            .message__user-icon {
+              width:  48px;
+              height: 48px;
+              float: left;
+
+              background: #eee;
+              background-size: cover;
+              border-radius: 5px;
+            }
+
+            .message__content {
+              width: $main-width - 100px;
+              float: right;
+
+              %content__text-base {
+                line-height: 20px;
+
+                img {
+                  width: 20px;
+                  height: 20px;
+                }
+
+                pre {
+                  font-size: 12px;
+                  margin: 5px 0;
+                  padding: 5px;
+                  background: #eee;
+                }
+              }
+
+              .content__header {
+                overflow: hidden;
+
+                .header__user-name {
+                  color: #333;
+                  font-weight: bold;
+                  text-decoration: none;
+                  margin-right: 5px;
+                  float: left;
+                }
+
+                .header__date, .header__channel {
+                  color: #aaa;
+                  font-size: 12px;
+                  text-decoration: none;
+                  margin-right: 5px;
+                }
+
+                .header__reply {
+                  width: 12px;
+                  height: 12px;
+                  display: inline-block;
+                  background: image-url('arrow.png');
+                  background-size: cover;
+                  cursor: pointer;
+
+                  &:hover {
+                    border: 1px solid #eee;
+                    border-radius: 2px;
+                  }
+                }
+              }
+
+              .content__text {
+                @extend %content__text-base;
+              }
+
+              .content__attachments {
+                .attachments__attachment {
+                  width: $main-width - 120px;
+                  margin: 5px 0;
+                  padding-left: 10px;
+
+                  border-left: 5px solid;
+
+                  .attachment__title {
+                    font-weight: bold;
+                  }
+
+                  .attachment__author {
+                    overflow: hidden;
+                    line-height: 15px;
+
+                    .author__icon {
+                      width: 15px;
+                      height: 15px;
+                      margin-right: 5px;
+
+                      background: #eee;
+                      background-size: cover;
+                      border-radius: 5px;
+
+                      display: inline-block;
+                      float: left;
+                    }
+                  }
+
+                  .attachment__text {
+                    @extend %content__text-base;
+                  }
+
+                  .attachment__image {
+                    width: 128px;
+                    height: 128px;
+                    background-size: cover;
+                  }
+
+                  .attachment__fields {
+                    overflow: hidden;
+
+                    .fields__field {
+                      width: 100%;
+                      margin: 10px 10px 10px 0;
+                      float: left;
+
+                      &.fields__field--shortly {
+                        width: 45%;
+                      }
+
+                      .field__title {
+                        font-weight: bold;
+                      }
+
+                      .field__text {
+                        @extend %content__text-base;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .main__reply {
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+
+          justify-content: center;
+          align-items: center;
+          display: none;
+
+          &.main__reply--opened {
+            display: flex;
+          }
+
+          .reply__window {
+            width: 400px;
+            height: 200px;
+            display: block;
+            position: relative;
+
+            background: #fff;
+            border: 1px solid #333;
+            border-radius: 5px;
+            box-shadow: 3px 3px 5px #ddd;
+
+            .window__title {
+              display: inline-block;
+              padding: 5px;
+
+              font-size: 20px;
+              font-weight: bold;
+              border-bottom: 3px solid #333;
+            }
+
+            .window__close {
+              position: absolute;
+              top: 0;
+              left: 370px;
+              font-size: 25px;
+              cursor: pointer;
+            }
+
+            .window__form {
+              padding: 10px;
+
+              textarea {
+                width: 350px;
+                height: 80px;
+                max-width: 350px;
+                max-height: 80px;
+                margin: 0 auto;
+                display: block;
+              }
+
+              button {
+                width: 100px;
+                height: 35px;
+                margin: 10px 270px;
+              }
+            }
+          }
+        }
+      }
+
+      .content__sidebar {
+        width: $sidebar-width;
+        float: right;
+
+        .sidebar__title {
+          font-size: 18px;
+          margin: 0;
+        }
+
+        .sidebar__keywords {
+          padding: 0;
+          margin: 5px 0;
+          overflow: hidden;
+
+          .keywords__keyword {
+            margin: 2px 2px 2px 0;
+            float: left;
+
+            font-size: 12px;
+            background: #eee;
+            border: solid 1px #ddd;
+            border-radius: 5px;
+
+            &:hover {
+              background: #fafafa;
+            }
+
+            a {
+              max-width: 250px;
+              display: block;
+              padding: 1px 8px;
+              overflow: hidden;
+
+              color: #333;
+              text-decoration: none;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
+}

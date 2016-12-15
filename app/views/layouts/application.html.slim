@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title
+      = content_for?(:title) ? yield(:title) : t('title')
+    = csrf_meta_tags
+    = stylesheet_link_tag :application
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js'
+    = javascript_include_tag :application
+  body
+    .stalck
+      .stalck__header
+        = render partial: 'layouts/_partials/header'
+      .stalck__content
+        = yield
